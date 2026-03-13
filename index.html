@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELITE FITNESS - 헬스장 회원 신청</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #c6ff00; /* Neon Lime */
+            --bg: #0a0a0a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --text-main: #ffffff;
+            --text-dim: #a0a0a0;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+            overflow-x: hidden;
+        }
+
+        /* Background Graphics */
+        body::before {
+            content: '';
+            position: absolute;
+            top: -10%;
+            right: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            bottom: -10%;
+            left: -10%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+            opacity: 0.15;
+            z-index: -1;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            z-index: 1;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .header h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            font-size: 2.5rem;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to bottom, #fff, #888);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header p {
+            color: var(--primary);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .form-group input, 
+        .form-group select, 
+        .form-group textarea {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 12px 16px;
+            color: #fff;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus, 
+        .form-group select:focus, 
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(198, 255, 0, 0.05);
+            box-shadow: 0 0 15px rgba(198, 255, 0, 0.2);
+        }
+
+        .form-group select option {
+            background-color: #1a1a1a;
+            color: white;
+        }
+
+        .membership-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .membership-option {
+            position: relative;
+        }
+
+        .membership-option input {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .membership-option label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1rem 0.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            height: 100%;
+        }
+
+        .membership-option label .price {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--primary);
+            margin-top: 4px;
+        }
+
+        .membership-option input:checked + label {
+            background: rgba(198, 255, 0, 0.1);
+            border-color: var(--primary);
+            box-shadow: 0 0 10px rgba(198, 255, 0, 0.3);
+        }
+
+        .membership-option input:checked + label .type {
+            color: #fff;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: var(--primary);
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            padding: 1rem;
+            font-size: 1.1rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 1rem;
+            box-shadow: 0 4px 20px rgba(198, 255, 0, 0.3);
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(198, 255, 0, 0.5);
+            background: #d4ff33;
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        .footer-text {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.8rem;
+            color: var(--text-dim);
+        }
+
+        /* Responsive Fixes */
+        @media (max-width: 480px) {
+            .card {
+                padding: 1.5rem;
+            }
+            .header h1 {
+                font-size: 2rem;
+            }
+            .membership-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header class="header">
+            <h1>ELITE FITNESS</h1>
+            <p>Join the movement</p>
+        </header>
+
+        <main class="card">
+            <form action="https://formspree.io/f/mqeybrjg" method="POST">
+                
+                <!-- Personal Information -->
+                <div class="form-group">
+                    <label for="full-name">성함 (Full Name)</label>
+                    <input type="text" id="full-name" name="name" placeholder="홍길동" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email-address">이메일 (Email)</label>
+                    <input type="email" id="email-address" name="email" placeholder="example@gym.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone-number">연락처 (Phone)</label>
+                    <input type="tel" id="phone-number" name="phone" placeholder="010-0000-0000" required>
+                </div>
+
+                <!-- Membership Selection -->
+                <div class="form-group">
+                    <label>멤버십 선택 (Membership Type)</label>
+                    <div class="membership-grid">
+                        <div class="membership-option">
+                            <input type="radio" id="basic" name="membership" value="Basic" checked>
+                            <label for="basic">
+                                <span class="type">BASIC</span>
+                                <span class="price">1 Month</span>
+                            </label>
+                        </div>
+                        <div class="membership-option">
+                            <input type="radio" id="pro" name="membership" value="Pro">
+                            <label for="pro">
+                                <span class="type">PRO</span>
+                                <span class="price">3 Months</span>
+                            </label>
+                        </div>
+                        <div class="membership-option">
+                            <input type="radio" id="elite" name="membership" value="Elite">
+                            <label for="elite">
+                                <span class="type">ELITE</span>
+                                <span class="price">12 Months</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Schedule -->
+                <div class="form-group">
+                    <label for="start-date">시작 예정일 (Start Date)</label>
+                    <input type="date" id="start-date" name="start_date" required>
+                </div>
+
+                <!-- Goals -->
+                <div class="form-group">
+                    <label for="fitness-goals">목표 및 기타 문의 (Goals/Notes)</label>
+                    <textarea id="fitness-goals" name="message" rows="3" placeholder="다이어트, 근성장, 재활 등"></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit">회원 신청하기 (Submit)</button>
+                
+            </form>
+        </main>
+
+        <p class="footer-text">
+            © 2026 Elite Fitness. All rights reserved.
+        </p>
+    </div>
+
+    <script>
+        // Set today's date as the default for start-date
+        document.getElementById('start-date').valueAsDate = new Date();
+    </script>
+
+</body>
+</html>
